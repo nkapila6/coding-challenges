@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"unicode/utf8"
 )
 
 func main() {
@@ -31,19 +32,24 @@ func main() {
 		}
 
 		if *byteCount {
-			fmt.Printf("%v %v", len(data), file)
+			fmt.Printf("%v %v\n", len(data), file)
 		}
 
 		if *lines {
-			fmt.Printf("%v %v", bytes.Count(data, []byte("\n")), file)
+			fmt.Printf("%v %v\n", bytes.Count(data, []byte("\n")), file)
 		}
 
 		if *words {
-
+			fmt.Printf("%v %v\n", len(bytes.Fields(data)), file)
 		}
 
 		if *chars {
+			fmt.Printf("%v %v\n", utf8.RuneCount(data), file)
+		}
 
+		if !*byteCount && !*lines && !*words {
+			// if all are false
+			fmt.Printf("%v\t%v\t%v %v\n", bytes.Count(data, []byte("\n")), len(bytes.Fields(data)), len(data), file)
 		}
 	}
 }
