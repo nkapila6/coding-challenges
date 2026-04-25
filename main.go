@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"os"
@@ -10,10 +11,10 @@ func main() {
 	fmt.Println("Hello from ccwc!")
 
 	// -c, -l, -w, -m
-	bytes := flag.Bool("c", false, "count bytes")
-	// lines := flag.Bool("l", false, "count lines")
-	// words := flag.Bool("w", false, "count words")
-	// chars := flag.Bool("m", false, "count chars")
+	byteCount := flag.Bool("c", false, "count bytes")
+	lines := flag.Bool("l", false, "count lines")
+	words := flag.Bool("w", false, "count words")
+	chars := flag.Bool("m", false, "count chars")
 
 	flag.Parse()
 	files := flag.Args()
@@ -29,8 +30,20 @@ func main() {
 			return
 		}
 
-		if *bytes {
+		if *byteCount {
 			fmt.Printf("%v %v", len(data), file)
+		}
+
+		if *lines {
+			fmt.Printf("%v %v", bytes.Count(data, []byte("\n")), file)
+		}
+
+		if *words {
+
+		}
+
+		if *chars {
+
 		}
 	}
 }
